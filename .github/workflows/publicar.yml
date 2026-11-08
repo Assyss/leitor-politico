@@ -15,6 +15,9 @@ concurrency:
 jobs:
   publicar:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: leitor-politico-site
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -29,6 +32,6 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: leitor-politico-site/_site
       - id: deployment
         uses: actions/deploy-pages@v4
