@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leitor Político</title>
+<meta name="description" content="Notícias políticas do mundo todo e pesquisa de termos de política.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..800;1,9..144,600&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f2;--card:#fffdf9;--tx:#1b1a17;--mut:#6f6a60;--bd:#e8e1d4;--ac:#c2410c;--chip:#f1ebdf;--sh:0 1px 0 rgba(0,0,0,.03),0 14px 30px -16px rgba(70,45,10,.28);--serif:"Fraunces","Iowan Old Style",Georgia,serif}
+@media(prefers-color-scheme:dark){:root:not([data-t=light]){--bg:#0d0f17;--card:#151826;--tx:#f1efe9;--mut:#9a9fb4;--bd:#23273a;--ac:#fb923c;--chip:#1c2033;--sh:0 14px 30px -16px rgba(0,0,0,.7)}}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--bg);background-image:var(--bgi,none);background-attachment:fixed;color:var(--tx);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:relative;overflow:hidden;color:#fff;padding:54px 0 96px;background:radial-gradient(900px 420px at 88% 0,rgba(234,88,12,.30),transparent 62%),radial-gradient(760px 460px at 0 100%,rgba(79,70,229,.38),transparent 62%),#0f1026}
+header .wrap{position:relative}
+.eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.75;font-weight:600}
+h1{margin:10px 0 12px;font:700 clamp(40px,9vw,76px)/1 var(--serif);letter-spacing:-.03em}
+h1 em{font-style:italic;background:linear-gradient(90deg,#fdba74,#fde68a);-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{margin:0;max-width:560px;font-size:clamp(16px,2.4vw,19px);opacity:.88}
+#upd{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:13px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:99px}
+#upd:before{content:"";width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.25)}
+nav{position:sticky;top:12px;z-index:5;display:flex;gap:4px;padding:5px;margin:-30px 0 26px;width:fit-content;max-width:100%;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(14px);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh)}
+nav button{border:0;background:none;color:var(--mut);font:600 15px inherit;padding:10px 20px;border-radius:12px;cursor:pointer;transition:.2s}
+nav button.on{background:var(--tx);color:var(--bg)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+input,select{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:13px 16px;min-width:0;box-shadow:var(--sh)}
+input{flex:1 1 240px}
+input:focus,select:focus{outline:2px solid var(--ac);outline-offset:1px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 16px;scrollbar-width:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:7px 15px;font:500 14px inherit;cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--ac)}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c,var(--ac))}
+.chip.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.chip small{opacity:.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:20px 20px 18px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:10px;transition:transform .2s,border-color .2s;animation:up .5s both}
+.card:before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c)}
+.card:hover{transform:translateY(-4px);border-color:var(--c)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}}
+.pill{align-self:flex-start;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--c);background:color-mix(in srgb,var(--c) 13%,transparent);padding:3px 10px;border-radius:99px}
+.meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--mut)}
+.src{font-weight:600;color:var(--tx)}
+.card h3{margin:0;font:600 19px/1.28 var(--serif)}
+.card p{margin:0;font-size:14.5px;color:var(--mut);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:12.5px;color:var(--mut)}
+@media(min-width:760px){.big{grid-column:span 2;padding:28px}.big h3{font-size:30px;line-height:1.15}.big p{font-size:16.5px;-webkit-line-clamp:5}}
+.sk{min-height:170px;background:linear-gradient(100deg,var(--card) 30%,var(--chip) 50%,var(--card) 70%) 0 0/200% 100%;animation:sh 1.3s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:26px;box-shadow:var(--sh);margin-bottom:20px;animation:up .5s both}
+.box h2{margin:0 0 8px;font:700 clamp(26px,5vw,38px)/1.1 var(--serif);letter-spacing:-.02em}
+.box p{font-size:17px}
+.box a.ler{color:var(--ac);font-weight:600}
+h4{margin:22px 0 4px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.lista a{display:block;padding:14px 0;border-bottom:1px solid var(--bd);transition:.2s}
+.lista a:hover{padding-left:8px;color:var(--ac)}
+.lista a:last-child{border:0}
+.lista b{display:block;line-height:1.35;font-family:var(--serif);font-size:17px}
+.btn{border:0;background:linear-gradient(135deg,#ea580c,#f59e0b);color:#fff;font:700 15px inherit;padding:13px 26px;border-radius:14px;cursor:pointer;box-shadow:0 8px 20px -8px #ea580c}
+.more{display:block;margin:28px auto}
+.vazio,.aviso{color:var(--mut);text-align:center;padding:34px 0}
+footer{color:var(--mut);font-size:13px;padding:36px 0 48px;text-align:center;border-top:1px solid var(--bd);margin-top:40px}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+:root[data-t=dark]{--bg:#0d0f17;--card:#151826;--tx:#f1efe9;--mut:#9a9fb4;--bd:#23273a;--ac:#fb923c;--chip:#1c2033;--sh:0 14px 30px -16px rgba(0,0,0,.7)}
+#tg{position:absolute;top:-36px;right:20px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);backdrop-filter:blur(8px);font-size:18px;cursor:pointer}
+.tick{margin-top:38px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.tr{display:flex;gap:44px;width:max-content;font-size:14px;animation:tk 90s linear infinite}
+.tr:hover{animation-play-state:paused}
+.tr a{white-space:nowrap;opacity:.9}.tr a:hover{opacity:1;text-decoration:underline}
+.tr a:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#fb923c;margin-right:12px;vertical-align:middle}
+@keyframes tk{to{transform:translateX(-50%)}}
+.card{gap:14px}.card:before{display:none}
+.thumb{position:relative;margin:-20px -20px 0;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 35%,#000))}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s}
+.card:hover .thumb img{transform:scale(1.07)}
+.thumb .pill{position:absolute;left:14px;top:14px;color:#fff;background:rgba(10,10,20,.55);backdrop-filter:blur(8px)}
+.body{display:flex;flex-direction:column;gap:10px;flex:1}
+.card.big{flex-direction:column}
+@media(min-width:760px){.big{flex-direction:row;gap:30px;padding:28px}.big .thumb{flex:1.15;margin:-28px 0 -28px -28px;aspect-ratio:auto;min-height:300px}.big .body{flex:1;justify-content:center}}
+
+nav{align-items:center}
+.globo{display:block;width:40px;height:40px;margin:0 4px 0 6px;filter:drop-shadow(0 4px 10px rgba(37,99,235,.5));transition:transform .4s}
+.globo:hover{transform:rotate(20deg) scale(1.1)}
+.globo svg{display:block;width:100%;height:100%}
+nav .sep{width:1px;height:26px;background:var(--bd);margin:0 6px}
+#rede{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#9ca3af;margin-left:4px}#dot.ok{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.25)}
+.ex{margin-top:14px;line-height:1.75;font-size:17px}
+details{border-top:1px solid var(--bd);padding:12px 0}details summary{cursor:pointer;font-weight:600}details p{margin:10px 0 6px}
+.cod{position:relative;margin:8px 0 2px;padding:12px 74px 12px 14px;background:var(--chip);border:1px solid var(--bd);border-radius:12px;overflow-x:auto;font:13.5px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre}
+.cod code{font:inherit}
+.cp{position:absolute;top:8px;right:8px;border:0;border-radius:8px;background:var(--tx);color:var(--bg);font:600 12px inherit;padding:5px 10px;cursor:pointer}
+progress{width:100%;height:10px;accent-color:var(--ac);margin-top:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+</style>
+</head>
+<body>
+<header><canvas id="rede" aria-hidden="true"></canvas><div class="wrap">
+  <div class="eyebrow" id="hoje">Edição global</div>
+  <h1>Leitor <em>Político</em></h1>
+  <p>O mundo da política em um só lugar: manchetes de nove regiões e um dicionário para entender o que está em jogo.</p>
+  <span id="upd">Carregando…</span>
+  <div class="tick"><div class="tr" id="tick"></div></div>
+  <button id="tg" title="Alternar tema" aria-label="Alternar tema">🌓</button>
+</div></header>
+
+<main class="wrap">
+  <nav>
+    <a class="globo" href="#" title="Leitor Político" aria-label="Voltar ao topo"><svg viewBox="0 0 40 40" aria-hidden="true">
+      <defs><radialGradient id="gb" cx="35%" cy="28%" r="85%"><stop offset="0" stop-color="#7dd3fc"/><stop offset=".5" stop-color="#2563eb"/><stop offset="1" stop-color="#1e1b4b"/></radialGradient><clipPath id="gc"><circle cx="20" cy="20" r="18"/></clipPath></defs>
+      <circle cx="20" cy="20" r="18" fill="url(#gb)"/>
+      <g clip-path="url(#gc)" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width=".9">
+        <path d="M0 12h40M0 20h40M0 28h40"/>
+        <ellipse cx="20" cy="20" ry="18" rx="18"><animate attributeName="rx" values="0;18;0" dur="6s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="20" cy="20" ry="18" rx="18"><animate attributeName="rx" values="0;18;0" dur="6s" begin="-2s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="20" cy="20" ry="18" rx="18"><animate attributeName="rx" values="0;18;0" dur="6s" begin="-4s" repeatCount="indefinite"/></ellipse>
+      </g>
+      <circle cx="20" cy="20" r="18" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.1"/>
+      <ellipse cx="13" cy="10" rx="6" ry="3" fill="#fff" fill-opacity=".22" transform="rotate(-30 13 10)"/>
+    </svg></a><span class="sep"></span>
+    <button id="t-news" class="on">📰 Notícias</button>
+    <button id="t-term">🔎 Pesquisar termo</button>
+  </nav>
+
+  <section id="news">
+    <div class="bar"><input id="q" type="search" placeholder="Filtrar manchetes (ex.: eleição, sanções, clima)…" aria-label="Filtrar manchetes"></div>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"><div class="card sk"></div><div class="card sk"></div><div class="card sk"></div><div class="card sk"></div><div class="card sk"></div><div class="card sk"></div></div>
+    <button class="btn more" id="more" hidden>Carregar mais</button>
+  </section>
+
+  <section id="term" hidden>
+    <form class="bar" id="f">
+      <input id="t" type="search" placeholder="Digite um termo: federalismo, impeachment, veto…" aria-label="Termo">
+      <select id="lang" aria-label="Idioma da Wikipédia"><option value="pt">Wikipédia PT</option><option value="en">English</option><option value="es">Español</option></select>
+      <button class="btn">Pesquisar</button>
+    </form>
+    <div class="chips" id="sug"></div>
+    <div id="out"><p class="aviso">Escolha uma sugestão ou digite um termo para ver a definição e as notícias recentes sobre ele.</p></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  Manchetes e links pertencem aos veículos citados; leia a matéria completa na fonte. Veículos estatais ou financiados por governos trazem uma nota.<br>
+  Dados: feeds RSS públicos · GDELT · Wikipédia.
+</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const url=u=>/^https?:\/\//i.test(u)?u:"#";
+const ago=ts=>{if(!ts)return"";const s=Date.now()/1000-ts;return s<90?"agora":s<3600?`há ${Math.round(s/60)} min`:s<86400?`há ${Math.round(s/3600)} h`:`há ${Math.round(s/86400)} d`};
+let DATA=[],regiao="Todas",busca="",lim=30;
+
+// ---------- abas ----------
+function aba(n){["news","term"].forEach(k=>{$("#"+k).hidden=k!==n;$("#t-"+k).classList.toggle("on",k===n)});}
+["news","term"].forEach(k=>$("#t-"+k).onclick=()=>aba(k));
+
+// ---------- notícias ----------
+async function carregar(){
+  try{
+    const d=await (await fetch("news.json",{cache:"no-cache"})).json();
+    DATA=d.itens||[];
+    $("#upd").textContent="Atualizado "+ago(Date.parse(d.atualizado)/1000)+" · "+DATA.length+" notícias";
+    chips();render();tick();
+  }catch(e){$("#grid").innerHTML='<p class="vazio">Não consegui carregar as notícias agora. Tente novamente em instantes.</p>';$("#upd").textContent="Sem dados";}
+}
+const COR={Mundo:"#6366f1",Brasil:"#22c55e","Américas":"#f59e0b",Europa:"#3b82f6","Rússia e Eurásia":"#a855f7","Oriente Médio":"#ef4444","África":"#f97316","Ásia":"#ec4899",Oceania:"#14b8a6"};
+const cor=r=>COR[r]||"#64748b";
+function chips(){
+  const c={};DATA.forEach(i=>c[i.regiao]=(c[i.regiao]||0)+1);
+  const nomes=["Todas",...Object.keys(c)];
+  $("#chips").innerHTML=nomes.map(n=>`<button class="chip ${n===regiao?"on":""}" data-r="${esc(n)}" style="--c:${cor(n)}">${n==="Todas"?"":"<i></i>"}${esc(n)}<small>${n==="Todas"?DATA.length:c[n]}</small></button>`).join("");
+  $("#chips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{regiao=b.dataset.r;lim=30;chips();render();});
+}
+function render(){
+  const q=busca.toLowerCase();
+  const l=DATA.filter(i=>(regiao==="Todas"||i.regiao===regiao)&&(!q||(i.titulo+" "+i.resumo).toLowerCase().includes(q)));
+  $("#grid").innerHTML=l.slice(0,lim).map((i,k)=>`<a class="card${k===0&&l.length>2?" big":""}" style="--c:${cor(i.regiao)};animation-delay:${Math.min(k,12)*40}ms" href="${esc(url(i.link))}" target="_blank" rel="noopener">
+    <div class="thumb">${i.img?`<img src="${esc(url(i.img))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span class="pill">${esc(i.regiao)}</span></div>
+    <div class="body"><h3>${esc(i.titulo)}</h3>${i.resumo?`<p>${esc(i.resumo)}</p>`:""}
+    <div class="meta"><span class="src">${esc(i.fonte)}${i.nota?` <span class="tag">· ${esc(i.nota)}</span>`:""}</span><span>${ago(i.ts)}</span></div></div></a>`).join("")||'<p class="vazio">Nenhuma notícia encontrada.</p>';
+  $("#more").hidden=l.length<=lim;
+}
+function tick(){const t=DATA.slice(0,10).map(i=>`<a href="${esc(url(i.link))}" target="_blank" rel="noopener">${esc(i.titulo)}</a>`).join("");$("#tick").innerHTML=t+t;}
+const R=document.documentElement;try{const s=localStorage.getItem("t");if(s)R.dataset.t=s}catch(e){}
+$("#tg").onclick=()=>{const d=(R.dataset.t||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"))==="dark"?"light":"dark";R.dataset.t=d;try{localStorage.setItem("t",d)}catch(e){}};
+$("#q").oninput=e=>{busca=e.target.value;lim=30;render();};
+$("#more").onclick=()=>{lim+=30;render();};
+
+// ---------- termos ----------
+const SUG=["federalismo","impeachment","separação de poderes","populismo","neoliberalismo","parlamentarismo","soberania","veto","democracia liberal"];
+$("#sug").innerHTML=SUG.map(s=>`<button class="chip">${esc(s)}</button>`).join("");
+$("#sug").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{$("#t").value=b.textContent;pesquisar();});
+$("#f").onsubmit=e=>{e.preventDefault();pesquisar();};
+
+async function wiki(titulo,lang){
+  const r=await fetch(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(titulo.replace(/ /g,"_"))}`);
+  if(!r.ok)throw new Error("Artigo não encontrado");return r.json();
+}
+async function pesquisar(){
+  const t=$("#t").value.trim(),lang=$("#lang").value;if(t.length<2)return;
+  $("#out").innerHTML='<p class="aviso">Pesquisando…</p>';
+  const [w,g]=await Promise.allSettled([
+    (async()=>{const r=await (await fetch(`https://${lang}.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(t)}&srlimit=5&format=json&origin=*`)).json();
+      const achados=r.query.search.map(x=>x.title);if(!achados.length)throw 0;return{achados,s:await wiki(achados[0],lang)};})(),
+    (async()=>{const r=await fetch(`https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(t)}&mode=artlist&format=json&maxrecords=20&timespan=1w&sort=DateDesc`);
+      return (await r.json()).articles||[];})()
+  ]);
+  let h=`<div class="box"><h2>${esc(t)}</h2>`;
+  if(w.status==="fulfilled"){const {achados,s}=w.value;
+    h+=`<h4>📚 Definição (Wikipédia)</h4><p>${esc(s.extract)}</p><a class="ler" target="_blank" rel="noopener" href="${esc(url(s.content_urls?.desktop?.page))}">Ler o artigo completo →</a>`;
+    if(achados.length>1)h+=`<h4>Outros artigos</h4><div class="chips">${achados.slice(1).map(a=>`<button class="chip" data-a="${esc(a)}">${esc(a)}</button>`).join("")}</div>`;
+  }else h+='<p class="aviso">Não achei este termo na Wikipédia. Tente outro nome ou idioma.</p>';
+  h+="</div>";
+  h+='<div class="box"><h2>📰 Notícias recentes sobre o termo</h2>';
+  if(g.status==="fulfilled"&&g.value.length)h+='<div class="lista">'+g.value.map(a=>`<a href="${esc(url(a.url))}" target="_blank" rel="noopener"><b>${esc(a.title)}</b><span class="tag">${esc(a.domain)} · ${esc(a.sourcecountry||"")}</span></a>`).join("")+"</div>"+'<p class="tag">Fonte: GDELT, última semana. Em inglês costuma haver mais resultados.</p>';
+  else h+=`<p class="aviso">Nada encontrado agora (ou o GDELT está ocupado). <a class="ler" target="_blank" rel="noopener" href="https://news.google.com/search?q=${encodeURIComponent(t)}">Buscar em outro lugar →</a></p>`;
+  h+="</div>";
+  if(IA_BASE)h+=`<div class="box"><h2>🧠 Explicação com IA</h2><button class="btn" id="bx">Explicar “${esc(t)}” com IA</button><div class="ex" id="ex"></div><p class="tag">Gerado por IA: pode conter erros. Confira em fontes confiáveis.</p></div>`;
+  $("#out").innerHTML=h;
+  if(IA_BASE)$("#bx").onclick=async()=>{const b=$("#bx"),ex=$("#ex");b.disabled=true;ex.textContent="Pensando…";
+    try{await ia(`Explique o termo de política: '${t}'. Inclua: definição simples, origem ou contexto histórico, principais visões e debates (com o melhor argumento de cada lado, se houver controvérsia), exemplos reais e termos relacionados.`,x=>{ex.innerHTML=md(x)});}
+    catch(e){ex.textContent="A IA está offline no momento. Tente novamente mais tarde.";}
+    b.disabled=false;};
+  $("#out").querySelectorAll("[data-a]").forEach(b=>b.onclick=async()=>{
+    try{const s=await wiki(b.dataset.a,lang);const box=$("#out .box");
+      box.querySelector("p").textContent=s.extract;box.querySelector("a.ler").href=url(s.content_urls?.desktop?.page);box.querySelector("h4").textContent="📚 "+s.title;}catch(e){}});
+}
+
+// ---------- fundo animado: rede de pontos com informação circulando ----------
+(function(){
+  const cv=$("#rede"),ctx=cv.getContext("2d"),hd=cv.parentElement,reduz=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  let W=0,H=0,D=150,last=0,vis=true,rod=false;const N=[],P=[];
+  function ajusta(){
+    const dpr=Math.min(devicePixelRatio||1,2);W=hd.clientWidth;H=hd.clientHeight;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);D=W<600?110:150;
+    const n=Math.min(80,Math.round(W*H/9000));
+    while(N.length<n)N.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:1.2+Math.random()*1.6,f:0});
+    N.length=n;N.forEach(p=>{p.x=Math.min(p.x,W);p.y=Math.min(p.y,H)});
+    if(reduz)quadro(0);
+  }
+  const viz=a=>N.filter(b=>b!==a&&Math.hypot(a.x-b.x,a.y-b.y)<D);
+  function pulso(a,c){const v=viz(a);if(v.length)P.push({a,b:v[Math.floor(Math.random()*v.length)],t:0,v:.012+Math.random()*.01,c});}
+  function quadro(ts){
+    ctx.clearRect(0,0,W,H);
+    for(const p of N){p.x+=reduz?0:p.vx;p.y+=reduz?0:p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;p.f*=.94;}
+    for(let i=0;i<N.length;i++)for(let j=i+1;j<N.length;j++){
+      const a=N[i],b=N[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<D){ctx.strokeStyle=`rgba(165,180,252,${(1-d/D)*.38})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+    }
+    for(const p of N){
+      if(p.f>.05){ctx.fillStyle=`rgba(253,186,116,${p.f*.35})`;ctx.beginPath();ctx.arc(p.x,p.y,p.r+9*p.f,0,7);ctx.fill();}
+      ctx.fillStyle="rgba(255,255,255,.85)";ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();
+    }
+    if(!reduz){
+      if(ts-last>260&&P.length<14&&N.length){last=ts;pulso(N[Math.floor(Math.random()*N.length)],3+Math.floor(Math.random()*3));}
+      for(let k=P.length-1;k>=0;k--){
+        const q=P[k];q.t+=q.v;
+        if(Math.hypot(q.a.x-q.b.x,q.a.y-q.b.y)>D*1.15){P.splice(k,1);continue;}
+        const x=q.a.x+(q.b.x-q.a.x)*q.t,y=q.a.y+(q.b.y-q.a.y)*q.t,g=ctx.createRadialGradient(x,y,0,x,y,10);
+        g.addColorStop(0,"rgba(253,230,138,.95)");g.addColorStop(1,"rgba(251,146,60,0)");
+        ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,10,0,7);ctx.fill();
+        if(q.t>=1){q.b.f=1;P.splice(k,1);if(q.c>0)pulso(q.b,q.c-1);}
+      }
+    }
+    if(vis&&!reduz)requestAnimationFrame(quadro);else rod=false;
+  }
+  function inicia(){if(!rod&&!reduz){rod=true;requestAnimationFrame(quadro);}}
+  new ResizeObserver(ajusta).observe(hd);
+  new IntersectionObserver(e=>{vis=e[0].isIntersecting;if(vis)inicia();}).observe(hd);
+  ajusta();inicia();
+})();
+// ---------- IA nas pesquisas (servidor Ollama do dono do site, via URL pública) ----------
+const IA_URL="";               // cole aqui o endereço https do seu túnel (vazio = IA desligada)
+const IA_MODELO="llama3.2:3b"; // modelo instalado no seu Ollama
+const IA_BASE=(new URLSearchParams(location.search).get("ia")||IA_URL).replace(/\/$/,""); // ?ia=http://localhost:11434 para testar no seu PC
+const SYS="Você é um tutor de ciência política. Responda sempre em português do Brasil. Explique com clareza, do simples ao detalhado, com exemplos reais. Em temas controversos apresente o melhor argumento de cada lado, sem opinião pessoal nem dizer em quem votar. Separe fatos, interpretações e opiniões. Nunca invente datas, números, citações ou nomes; se não souber, diga. Termine sugerindo 2 ou 3 termos relacionados.";
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/^#+\s*(.+)$/gm,"<b>$1</b>").replace(/^[-*]\s+/gm,"• ").replace(/\n/g,"<br>");
+async function* nd(r){const rd=r.body.getReader(),dec=new TextDecoder();let b="";for(;;){const {done,value}=await rd.read();if(done)break;b+=dec.decode(value,{stream:true});let i;while((i=b.indexOf("\n"))>=0){const l=b.slice(0,i).trim();b=b.slice(i+1);if(l)yield JSON.parse(l);}}if(b.trim())yield JSON.parse(b);}
+async function ia(pergunta,onTok){
+  const r=await fetch(IA_BASE+"/api/chat",{method:"POST",body:JSON.stringify({model:IA_MODELO,stream:true,messages:[{role:"system",content:SYS},{role:"user",content:pergunta}],options:{temperature:.3,num_ctx:4096}})});
+  if(!r.ok)throw new Error("status "+r.status);
+  let all="";for await(const j of nd(r)){if(j.error)throw new Error(j.error);all+=j.message?.content||"";onTok(all.replace(/<think>[\s\S]*?(<\/think>|$)/g,""));}
+}
+$("#hoje").textContent=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+carregar();
+</script>
+</body>
+</html>

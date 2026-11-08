@@ -1,0 +1,74 @@
+{
+ "Mundo": {
+  "BBC World": "https://feeds.bbci.co.uk/news/world/rss.xml",
+  "Al Jazeera": [
+   "https://www.aljazeera.com/xml/rss/all.xml",
+   "financiada pelo governo do Catar"
+  ],
+  "The Guardian World": "https://www.theguardian.com/world/rss",
+  "NYT World": "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
+  "France 24": "https://www.france24.com/en/rss",
+  "ONU News": "https://news.un.org/feed/subscribe/en/news/all/rss.xml"
+ },
+ "Brasil": {
+  "Folha - Mundo": "https://feeds.folha.uol.com.br/mundo/rss091.xml",
+  "G1 - Mundo": "https://g1.globo.com/rss/g1/mundo/",
+  "Agência Brasil - Internacional": "https://agenciabrasil.ebc.com.br/rss/internacional/feed.xml",
+  "DW Brasil": "https://rss.dw.com/xml/rss-br-all",
+  "RFI Português": "https://www.rfi.fr/pt/rss"
+ },
+ "Américas": {
+  "BBC América Latina": "https://feeds.bbci.co.uk/news/world/latin_america/rss.xml",
+  "BBC EUA e Canadá": "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml",
+  "CBC World (Canadá)": "https://www.cbc.ca/webfeed/rss/rss-world",
+  "MercoPress (Atlântico Sul)": "https://en.mercopress.com/rss",
+  "El País América (espanhol)": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/america/portada"
+ },
+ "Europa": {
+  "BBC Europa": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",
+  "DW English": "https://rss.dw.com/xml/rss-en-all",
+  "Euronews": "https://www.euronews.com/rss?format=mrss",
+  "Politico Europe": "https://www.politico.eu/feed/",
+  "Kyiv Independent (Ucrânia)": "https://kyivindependent.com/feed/"
+ },
+ "Rússia e Eurásia": {
+  "Meduza (English)": "https://meduza.io/rss/en/all",
+  "The Moscow Times": "https://www.themoscowtimes.com/rss/news",
+  "TASS": [
+   "https://tass.com/rss/v2.xml",
+   "agência estatal da Rússia"
+  ]
+ },
+ "Oriente Médio": {
+  "BBC Oriente Médio": "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
+  "Times of Israel": "https://www.timesofisrael.com/feed/",
+  "Haaretz (Israel)": "https://www.haaretz.com/srv/haaretz-latest-headlines",
+  "Middle East Eye": "https://www.middleeasteye.net/rss",
+  "Al-Monitor": "https://www.al-monitor.com/rss",
+  "Arab News": "https://www.arabnews.com/rss.xml"
+ },
+ "África": {
+  "BBC África": "https://feeds.bbci.co.uk/news/world/africa/rss.xml",
+  "Daily Maverick (África do Sul)": "https://www.dailymaverick.co.za/dmrss/",
+  "Mail & Guardian (África do Sul)": "https://mg.co.za/feed/",
+  "Premium Times (Nigéria)": "https://www.premiumtimesng.com/feed"
+ },
+ "Ásia": {
+  "BBC Ásia": "https://feeds.bbci.co.uk/news/world/asia/rss.xml",
+  "The Hindu - Internacional (Índia)": "https://www.thehindu.com/news/international/feeder/default.rss",
+  "Times of India - Mundo": "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms",
+  "Dawn (Paquistão)": "https://www.dawn.com/feeds/home",
+  "The Diplomat (Ásia-Pacífico)": "https://thediplomat.com/feed/",
+  "CNA (Singapura)": "https://www.channelnewsasia.com/api/v1/rss-outbound-feed?_format=xml&category=6511",
+  "Japan Times": "https://www.japantimes.co.jp/feed/",
+  "Xinhua (China)": [
+   "http://www.xinhuanet.com/english/rss/worldrss.xml",
+   "agência estatal da China"
+  ]
+ },
+ "Oceania": {
+  "ABC Australia": "https://www.abc.net.au/news/feed/2942460/rss.xml",
+  "RNZ - Mundo (Nova Zelândia)": "https://www.rnz.co.nz/rss/world.xml",
+  "RNZ - Pacífico": "https://www.rnz.co.nz/rss/pacific.xml"
+ }
+}
