@@ -277,7 +277,7 @@ async function pesquisar(){
   ajusta();inicia();
 })();
 // ---------- IA nas pesquisas (servidor Ollama do dono do site, via URL pública) ----------
-const IA_URL="";               // cole aqui o endereço https do seu túnel (vazio = IA desligada)
+const IA_URL="https://deviant-staffing-ash-foreign.trycloudflare.com";               // cole aqui o endereço https do seu túnel (vazio = IA desligada)
 const IA_MODELO="llama3.2:3b"; // modelo instalado no seu Ollama
 const IA_BASE=(new URLSearchParams(location.search).get("ia")||IA_URL).replace(/\/$/,""); // ?ia=http://localhost:11434 para testar no seu PC
 const SYS="Você é um tutor de ciência política. Responda sempre em português do Brasil. Explique com clareza, do simples ao detalhado, com exemplos reais. Em temas controversos apresente o melhor argumento de cada lado, sem opinião pessoal nem dizer em quem votar. Separe fatos, interpretações e opiniões. Nunca invente datas, números, citações ou nomes; se não souber, diga. Termine sugerindo 2 ou 3 termos relacionados.";
